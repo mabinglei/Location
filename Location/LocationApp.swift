@@ -43,7 +43,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let newLocation = locations.last else { return }
-        withAnimation(.easeInOut(duration: 1.0)) {
+        withAnimation(.smooth(duration: 1.0)) {
             self.location = MapCameraPosition.region(.init(center: newLocation.coordinate, span: span))
         }
     }
