@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  LocationApp.swift
 //  Location
 //
 //  Created by Binglei Ma on 3/1/25.
@@ -8,8 +8,17 @@
 import SwiftUI
 import MapKit
 
+@main
+struct LocationApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}
+
 struct ContentView: View {
-    @StateObject private var locationManager = LocationManager()
+    @State private var locationManager = LocationManager()
     var body: some View {
         Map(position: $locationManager.location) {
             UserAnnotation()
@@ -17,10 +26,11 @@ struct ContentView: View {
     }
 }
 
-class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+@Observable
+class LocationManager: NSObject, CLLocationManagerDelegate {
     private var locationManager = CLLocationManager()
     private let span = MKCoordinateSpan(latitudeDelta: 10, longitudeDelta: 10)
-    @Published var location: MapCameraPosition
+    var location: MapCameraPosition
     
     override init() {
         self.location = MapCameraPosition.region(.init(center: .init(), span: span))
